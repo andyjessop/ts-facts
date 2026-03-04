@@ -1,0 +1,5 @@
+---
+alwaysApply: true
+---
+
+All dependencies and devDependencies should be defined at the root, so that each package and app shares the node modules. This is of critical importance to the maintenance of the repo.

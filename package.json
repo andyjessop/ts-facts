@@ -1,0 +1,27 @@
+{
+  "name": "bun-playground",
+  "license": "ISC",
+  "type": "module",
+  "scripts": {
+    "format": "biome format --write .",
+    "cli:start": "bun run --cwd apps/cli start",
+    "test": "bun run scripts/test.ts",
+    "lint": "bun run scripts/lint.ts",
+    "typecheck": "bun run scripts/typecheck.ts",
+    "test:integration": "bun run scripts/test-integration.ts",
+    "prepare": "husky",
+    "ci": "bun run test && bun run lint && bun run typecheck && bun run test:integration"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.5",
+    "@types/bun": "^1.3.10",
+    "husky": "^9.1.7",
+    "typescript": "^5.8.2",
+    "zod": "^4.3.6"
+  }
+}

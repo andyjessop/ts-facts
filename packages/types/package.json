@@ -1,0 +1,11 @@
+{
+  "name": "types",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "bun test src",
+    "test:integration": "bun test test",
+    "lint": "biome check src",
+    "typecheck": "tsc --noEmit"
+  }
+}
