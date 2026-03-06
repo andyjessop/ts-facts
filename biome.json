@@ -7,10 +7,30 @@
 			}
 		}
 	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"recommended": true,
+			"complexity": {
+				"noImportantStyles": "warn"
+			}
 		}
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["apps/client/**/*.css"],
+			"linter": {
+				"rules": {
+					"complexity": {
+						"noImportantStyles": "off"
+					}
+				}
+			}
+		}
+	]
 }

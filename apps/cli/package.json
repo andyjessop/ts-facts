@@ -1,10 +1,27 @@
 {
-  "name": "server",
-  "scripts": {
-    "start": "bun run ./src/index.ts",
-    "test": "bun test src",
-    "test:integration": "bun test test",
-    "lint": "biome check src",
-    "typecheck": "tsc --noEmit"
-  }
+	"name": "cli",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"bin": {
+		"cli": "./bin/run.js"
+	},
+	"scripts": {
+		"build": "tsc",
+		"start": "bun run build && node bin/run.js",
+		"dev": "node bin/dev.js",
+		"test": "bun test src",
+		"test:integration": "bun run build && bun test test",
+		"lint": "biome check src",
+		"typecheck": "tsc --noEmit"
+	},
+	"oclif": {
+		"bin": "cli",
+		"dirname": "cli",
+		"commands": "./dist/commands",
+		"topicSeparator": " ",
+		"plugins": [
+			"@oclif/plugin-help"
+		]
+	}
 }

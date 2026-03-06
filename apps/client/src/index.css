@@ -1,0 +1,134 @@
+@import "tailwindcss";
+@import "./styles/nord.css";
+
+@theme {
+	--color-border: hsl(var(--border));
+	--color-input: hsl(var(--input));
+	--color-ring: hsl(var(--ring));
+	--color-background: hsl(var(--background));
+	--color-foreground: hsl(var(--foreground));
+
+	--color-primary: hsl(var(--primary));
+	--color-primary-foreground: hsl(var(--primary-foreground));
+
+	--color-secondary: hsl(var(--secondary));
+	--color-secondary-foreground: hsl(var(--secondary-foreground));
+
+	--color-destructive: hsl(var(--destructive));
+	--color-destructive-foreground: hsl(var(--destructive-foreground));
+
+	--color-muted: hsl(var(--muted));
+	--color-muted-foreground: hsl(var(--muted-foreground));
+
+	--color-accent: hsl(var(--accent));
+	--color-accent-foreground: hsl(var(--accent-foreground));
+
+	--color-popover: hsl(var(--popover));
+	--color-popover-foreground: hsl(var(--popover-foreground));
+
+	--color-card: hsl(var(--card));
+	--color-card-foreground: hsl(var(--card-foreground));
+
+	--color-chart-1: hsl(var(--chart-1));
+	--color-chart-2: hsl(var(--chart-2));
+	--color-chart-3: hsl(var(--chart-3));
+	--color-chart-4: hsl(var(--chart-4));
+	--color-chart-5: hsl(var(--chart-5));
+
+	--color-sidebar: hsl(var(--sidebar-background));
+	--color-sidebar-foreground: hsl(var(--sidebar-foreground));
+	--color-sidebar-primary: hsl(var(--sidebar-primary));
+	--color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+	--color-sidebar-accent: hsl(var(--sidebar-accent));
+	--color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+	--color-sidebar-border: hsl(var(--sidebar-border));
+	--color-sidebar-ring: hsl(var(--sidebar-ring));
+
+	--radius-lg: 0px;
+	--radius-md: 0px;
+	--radius-sm: 0px;
+
+	--animate-accordion-down: accordion-down 0.2s ease-out;
+	--animate-accordion-up: accordion-up 0.2s ease-out;
+
+	@keyframes accordion-down {
+		from {
+			height: 0;
+		}
+
+		to {
+			height: var(--radix-accordion-content-height);
+		}
+	}
+
+	@keyframes accordion-up {
+		from {
+			height: var(--radix-accordion-content-height);
+		}
+
+		to {
+			height: 0;
+		}
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+		box-sizing: border-box;
+		border-radius: 0 !important;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+		font-family:
+			Menlo, "SF Mono", ui-monospace, "Cascadia Code", "Roboto Mono",
+			"Courier New", monospace;
+		font-size: 0.8125rem;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+		-webkit-font-smoothing: none;
+		-moz-osx-font-smoothing: auto;
+		margin: 0;
+		cursor: crosshair;
+	}
+
+	@media (min-width: 1536px) {
+		body {
+			font-size: 0.875rem;
+		}
+	}
+
+	button,
+	[role="button"],
+	a {
+		cursor: pointer;
+	}
+
+	th {
+		text-transform: uppercase;
+		font-weight: 700;
+	}
+
+	td[data-numeric="true"],
+	th[data-numeric="true"] {
+		text-align: right;
+	}
+}
+
+::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+}
+
+::-webkit-scrollbar-track {
+	background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #333333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #00ff41;
+}

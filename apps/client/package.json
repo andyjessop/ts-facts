@@ -1,0 +1,17 @@
+{
+	"name": "client",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"test": "vitest run --passWithNoTests src",
+		"test:integration": "vitest run --passWithNoTests test",
+		"lint": "biome check src"
+	},
+	"dependencies": {
+		"pi": "workspace:*"
+	}
+}
