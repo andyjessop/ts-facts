@@ -1,0 +1,28 @@
+{
+	"permissions": {
+		"allow": [
+			"Bash(find /Users/andy/dev/derek -name tsconfig*.json -exec grep -l \"backtester\\\\|paths\" {})",
+			"Bash(2)",
+			"Bash(grep -r \"class.*Backtester\\\\|type.*Backtester\" /Users/andy/dev/derek --include=*.ts --include=*.js)",
+			"Bash(grep:*)",
+			"Bash(bun run:*)",
+			"Bash(git stash:*)",
+			"Bash(bun install:*)",
+			"Bash(git checkout:*)",
+			"Bash(biome check:*)",
+			"Bash(bunx biome:*)",
+			"Bash(sed -n '10,25p' /Users/andy/dev/derek/apps/cli/src/commands/backtest/iterate.ts)",
+			"Bash(sed -n '128,140p' /Users/andy/dev/derek/apps/cli/src/commands/backtest/iterate.ts)",
+			"Bash(sed -n '80,90p' /Users/andy/dev/derek/packages/agent/src/loop/state-machine.ts)",
+			"Bash(sed -n '200,210p' /Users/andy/dev/derek/packages/agent/src/loop/state-machine.ts)",
+			"Bash(sed -n '102,108p' /Users/andy/dev/derek/packages/agent/src/genome/compiler.test.ts)",
+			"Bash(sed -n '120,126p' /Users/andy/dev/derek/packages/agent/src/genome/compiler.test.ts)",
+			"Bash(sed -n '243,250p' /Users/andy/dev/derek/packages/agent/src/genome/compiler.test.ts)",
+			"Bash(sed -n '245,252p' /Users/andy/dev/derek/packages/agent/src/genome/compiler.test.ts)",
+			"Bash(sed -n '260,270p' /Users/andy/dev/derek/packages/agent/src/genome/compiler.test.ts)",
+			"Bash(sed -n '45,52p' /Users/andy/dev/derek/apps/cli/src/commands/agent/run-batch.ts)",
+			"Bash(sed -n '45,72p' /Users/andy/dev/derek/apps/cli/src/commands/agent/tick.ts)",
+			"Bash(sed -n '96,103p' /Users/andy/dev/derek/apps/cli/src/commands/analyze.ts)"
+		]
+	}
+}

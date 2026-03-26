@@ -1,0 +1,5 @@
+
+It is crucially important that everything is strongly typed where possible. To aid in this, we use zod to define schemas, and then will always check the validity of data where we are not 100% sure. For exmaple, when we receive data from a network request, we must always parse with Zod.
+The types package must export all the schemas and types that we use in the application.
+
+All tsconfig.json's should extend the tsconfig.base.json where possible. Add options to that file if necessary so that all packages and apps can share the settings.

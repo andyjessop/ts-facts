@@ -1,0 +1,6 @@
+---
+trigger: always_on
+---
+
+All bun scripts should be run from the root, e.g. to run a script in a subfolder:
+  "cli:start": "bun run --cwd apps/cli start"
