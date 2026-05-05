@@ -25,7 +25,6 @@ Path format: project-relative POSIX paths
 Line and column format: one-based
 Default output file: ./ts-static-facts.json
 Runtime/package manager/test runner: Bun
-CLI framework: oclif
 Repository layout: monorepo with apps/ and packages/
 ```
 
@@ -72,8 +71,8 @@ packages/
 ```
 
 3. Add TypeScript as a dependency.
-4. Add oclif as the CLI framework dependency.
-5. Add a glob-matching dependency for excludes, for example `minimatch`.
+4. Add a CLI entry point.
+5. Add a glob-matching dependency for excludes, for example `picomatch`.
 6. Add Bun test support using `bun:test`, not Vitest.
 7. Add these Bun-compatible package scripts:
 
@@ -91,7 +90,7 @@ packages/
 ts-facts
 ```
 
-and points to the compiled oclif CLI entry file.
+and points to the CLI entry file.
 
 ## Acceptance Criteria
 

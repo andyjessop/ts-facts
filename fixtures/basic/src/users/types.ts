@@ -13,3 +13,8 @@ export interface User {
 	email: string;
 	locked: boolean;
 }
+
+export enum UserRole {
+	Admin = "admin",
+	Member = "member",
+}

@@ -56,10 +56,17 @@ describe("isNodeExported", () => {
 		expect(isNodeExported(node)).toBe(true);
 	});
 
-	test("returns false for non-exported enum", () => {
-		const source = createSource("enum Role { Admin }");
+	test("returns true for named default exported function", () => {
+		const source = createSource("export default function login() {}");
 		const node = source.statements[0];
 		if (!node) throw new Error("Node not found");
-		expect(isNodeExported(node)).toBe(false);
+		expect(isNodeExported(node)).toBe(true);
+	});
+
+	test("returns true for anonymous default exported function", () => {
+		const source = createSource("export default function () {}");
+		const node = source.statements[0];
+		if (!node) throw new Error("Node not found");
+		expect(isNodeExported(node)).toBe(true);
 	});
 });
