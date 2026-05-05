@@ -1,0 +1,18 @@
+{
+	"name": "ts-facts-core",
+	"type": "module",
+	"main": "src/index.ts",
+	"scripts": {
+		"build": "tsc",
+		"test": "bun test test",
+		"lint": "biome check src test",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"picomatch": "^4.0.3",
+		"typescript": "^5.9.3"
+	},
+	"devDependencies": {
+		"@types/picomatch": "^4.0.2"
+	}
+}

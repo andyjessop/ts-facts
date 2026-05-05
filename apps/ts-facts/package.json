@@ -1,0 +1,19 @@
+{
+	"name": "ts-facts",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"bin": {
+		"ts-facts": "./dist/index.js"
+	},
+	"scripts": {
+		"build": "tsc",
+		"start": "bun run build && node dist/index.js",
+		"test": "bun test test",
+		"lint": "biome check src test",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"ts-facts-core": "workspace:*"
+	}
+}
