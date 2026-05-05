@@ -2557,6 +2557,6 @@ Tasks 12-16
 Milestone 4: Calls and symbol resolution
 Tasks 17-21
 
-Milestone 5: Output, oclif CLI, and full validation
+Milestone 5: Output, CLI, and full validation
 Tasks 22-31
 ```
