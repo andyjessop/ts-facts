@@ -5,6 +5,7 @@
 	"scripts": {
 		"format": "biome format --write .",
 		"cli:start": "bun run --cwd apps/cli start",
+		"ts-facts": "bun run --cwd apps/ts-facts start --",
 		"client:dev": "bun run --cwd apps/client dev",
 		"client:build": "bun run --cwd apps/client build",
 		"client:preview": "bun run --cwd apps/client preview",
