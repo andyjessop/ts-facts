@@ -1,3 +1,4 @@
+export * from "./callTarget";
 export * from "./exported";
 export * from "./extractCalls";
 export * from "./extractSymbols";

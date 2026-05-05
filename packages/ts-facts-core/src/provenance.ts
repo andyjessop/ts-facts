@@ -5,6 +5,10 @@ import type { Provenance, ProvenanceKind } from "./schema";
 /**
  * Convert an absolute file path to a project-relative POSIX path.
  */
+export function normalizePath(filePath: string): string {
+	return filePath.replace(/\\/g, "/");
+}
+
 export function toProjectRelativePath(
 	rootDir: string,
 	absoluteFilePath: string,

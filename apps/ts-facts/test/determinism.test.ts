@@ -18,14 +18,7 @@ describe("Determinism", () => {
 
 		// Run A
 		const procA = Bun.spawn(
-			[
-				"bun",
-				"src/index.ts",
-				"--tsconfig",
-				fixtureTsconfig,
-				"--out",
-				outFileA,
-			],
+			["bun", "src/index.ts", "--tsconfig", fixtureTsconfig, "--out", outFileA],
 			{ cwd: rootDir, stdout: "pipe", stderr: "pipe" },
 		);
 		const codeA = await procA.exited;
@@ -33,14 +26,7 @@ describe("Determinism", () => {
 
 		// Run B
 		const procB = Bun.spawn(
-			[
-				"bun",
-				"src/index.ts",
-				"--tsconfig",
-				fixtureTsconfig,
-				"--out",
-				outFileB,
-			],
+			["bun", "src/index.ts", "--tsconfig", fixtureTsconfig, "--out", outFileB],
 			{ cwd: rootDir, stdout: "pipe", stderr: "pipe" },
 		);
 		const codeB = await procB.exited;

@@ -21,7 +21,10 @@ describe("CLI Negative Paths & Exclusions", () => {
 
 	test("multiple --exclude values are accepted and applied", async () => {
 		const rootDir = resolve(import.meta.dir, "..");
-		const fixtureTsconfig = resolve(rootDir, "../../fixtures/basic/tsconfig.json");
+		const fixtureTsconfig = resolve(
+			rootDir,
+			"../../fixtures/basic/tsconfig.json",
+		);
 		const outFile = resolve(rootDir, "test-out-exclude.json");
 
 		if (existsSync(outFile)) {

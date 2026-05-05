@@ -16,14 +16,7 @@ describe("E2E: Classes Fixture", () => {
 		}
 
 		const proc = Bun.spawn(
-			[
-				"bun",
-				"src/index.ts",
-				"--tsconfig",
-				fixtureTsconfig,
-				"--out",
-				outFile,
-			],
+			["bun", "src/index.ts", "--tsconfig", fixtureTsconfig, "--out", outFile],
 			{
 				cwd: rootDir,
 				stdout: "pipe",

@@ -300,14 +300,11 @@ describe("findEnclosingCallableSymbol", () => {
 		expect(newGreeter?.returnType.checkerTypeText).toBe("Greeter");
 		expect(newGreeter?.provenance.nodeKind).toBe("NewExpression");
 
-		// 6. Check external calls (console.log)
+		// 6. Check platform/built-in calls (console.log) are filtered out
 		const consoleCalls = calls.filter((c) =>
 			c.expressionText.startsWith("console.log("),
 		);
-		expect(consoleCalls.length).toBeGreaterThan(0);
-		for (const call of consoleCalls) {
-			expect(call.to).toBeNull();
-		}
+		expect(consoleCalls.length).toBe(0);
 	});
 
 	test("class symbols are never used as from", () => {
