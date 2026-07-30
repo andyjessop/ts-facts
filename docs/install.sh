@@ -88,7 +88,7 @@ verify_checksum() {
 	fi
 
 	TMP_DIR="$(mktemp -d)"
-	trap 'rm -rf "$TMP_DIR"' EXIT INT HTERM
+	trap 'rm -rf "$TMP_DIR"' EXIT INT HUP TERM
 
 	if ! download "$CHECKSUMS_URL" "$TMP_DIR/checksums.txt" 2>/dev/null; then
 		return 0
