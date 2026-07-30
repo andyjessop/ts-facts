@@ -8,6 +8,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
+		"compile": "bun run ../../scripts/compile-cli.ts",
 		"start": "bun run build && bun dist/index.js",
 		"test": "bun test test",
 		"lint": "biome check src test",

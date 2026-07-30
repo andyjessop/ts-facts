@@ -13,6 +13,7 @@
 		"client:test": "bun run --cwd apps/client test",
 		"client:test:integration": "bun run --cwd apps/client test:integration",
 		"build": "bun run scripts/build.ts",
+		"compile:cli": "bun run scripts/compile-cli.ts",
 		"test": "bun run scripts/test.ts",
 		"lint": "bun run scripts/lint.ts",
 		"typecheck": "bun run scripts/typecheck.ts",
