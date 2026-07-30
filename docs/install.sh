@@ -5,9 +5,11 @@
 #   curl -fsSL https://andyjessop.github.io/ts-facts/install.sh | sh
 #
 # Environment:
-#   TS_FACTS_VERSION     Release tag (default: latest), e.g. v0.1.0
-#   TS_FACTS_INSTALL_DIR Install directory (default: $HOME/.local/bin)
-#   TS_FACTS_REPO        GitHub repo (default: andyjessop/ts-facts)
+#   TS_FACTS_VERSION       Release tag (default: latest), e.g. v0.1.0
+#   TS_FACTS_INSTALL_DIR   Install directory (default: $HOME/.local/bin)
+#   TS_FACTS_REPO          GitHub repo (default: andyjessop/ts-facts)
+#   TS_FACTS_DOWNLOAD_URL  Override binary download URL (for testing)
+#   TS_FACTS_CHECKSUMS_URL Override checksums.txt URL (for testing)
 
 set -eu
 
@@ -15,6 +17,8 @@ REPO="${TS_FACTS_REPO:-andyjessop/ts-facts}"
 VERSION="${TS_FACTS_VERSION:-latest}"
 INSTALL_DIR="${TS_FACTS_INSTALL_DIR:-${HOME}/.local/bin}"
 BINARY_NAME="ts-facts"
+DOWNLOAD_URL="${TS_FACTS_DOWNLOAD_URL:-}"
+CHECKSUMS_URL="${TS_FACTS_CHECKSUMS_URL:-}"
 
 say() {
 	printf '%s\n' "$*"
@@ -57,6 +61,11 @@ detect_platform() {
 }
 
 download_url() {
+	if [ -n "$DOWNLOAD_URL" ]; then
+		printf '%s' "$DOWNLOAD_URL"
+		return
+	fi
+
 	ASSET="ts-facts-${PLATFORM}"
 	if [ "$VERSION" = "latest" ]; then
 		printf 'https://github.com/%s/releases/latest/download/%s' "$REPO" "$ASSET"
@@ -80,17 +89,19 @@ download() {
 }
 
 verify_checksum() {
-	CHECKSUMS_URL=""
-	if [ "$VERSION" = "latest" ]; then
-		CHECKSUMS_URL="https://github.com/${REPO}/releases/latest/download/checksums.txt"
+	CHECKSUMS_SOURCE=""
+	if [ -n "$CHECKSUMS_URL" ]; then
+		CHECKSUMS_SOURCE="$CHECKSUMS_URL"
+	elif [ "$VERSION" = "latest" ]; then
+		CHECKSUMS_SOURCE="https://github.com/${REPO}/releases/latest/download/checksums.txt"
 	else
-		CHECKSUMS_URL="https://github.com/${REPO}/releases/download/${VERSION}/checksums.txt"
+		CHECKSUMS_SOURCE="https://github.com/${REPO}/releases/download/${VERSION}/checksums.txt"
 	fi
 
 	TMP_DIR="$(mktemp -d)"
 	trap 'rm -rf "$TMP_DIR"' EXIT INT HUP TERM
 
-	if ! download "$CHECKSUMS_URL" "$TMP_DIR/checksums.txt" 2>/dev/null; then
+	if ! download "$CHECKSUMS_SOURCE" "$TMP_DIR/checksums.txt" 2>/dev/null; then
 		return 0
 	fi
 

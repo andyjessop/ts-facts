@@ -37,14 +37,16 @@ async function main(): Promise<void> {
 	const platformArg = process.argv.find((arg) => arg.startsWith("--platform="));
 	const outArg = process.argv.find((arg) => arg.startsWith("--out="));
 
-	const platformKey = platformArg?.slice("--platform=".length) ?? detectPlatformKey();
+	const platformKey =
+		platformArg?.slice("--platform=".length) ?? detectPlatformKey();
 	const bunTarget = TARGETS[platformKey];
 
 	if (!bunTarget) {
 		throw new Error(`Unknown platform key: ${platformKey}`);
 	}
 
-	const outfile = outArg?.slice("--out=".length) ?? resolve(OUT_DIR, assetName(platformKey));
+	const outfile =
+		outArg?.slice("--out=".length) ?? resolve(OUT_DIR, assetName(platformKey));
 	mkdirSync(dirname(outfile), { recursive: true });
 
 	console.log(`Compiling ts-facts for ${platformKey} → ${outfile}`);
