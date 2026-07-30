@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
+import type { StaticFactsFile } from "ts-facts-core";
 
 describe("E2E: Function Variables Fixture", () => {
 	test("runs the full pipeline and extracts function variables correctly", async () => {
@@ -32,16 +33,18 @@ describe("E2E: Function Variables Fixture", () => {
 
 		expect(existsSync(outFile)).toBe(true);
 
-		const data = JSON.parse(readFileSync(outFile, "utf-8"));
+		const data = JSON.parse(readFileSync(outFile, "utf-8")) as StaticFactsFile;
 
 		const symbols = data.symbols;
-		const approveInvoice = symbols.find(
-			(s: any) => s.name === "approveInvoice",
-		);
-		const rejectInvoice = symbols.find((s: any) => s.name === "rejectInvoice");
+		const approveInvoice = symbols.find((s) => s.name === "approveInvoice");
+		const rejectInvoice = symbols.find((s) => s.name === "rejectInvoice");
 
 		expect(approveInvoice).toBeDefined();
 		expect(rejectInvoice).toBeDefined();
+
+		if (!approveInvoice || !rejectInvoice) {
+			throw new Error("Expected function variable symbols missing");
+		}
 
 		expect(approveInvoice.kind).toBe("function_variable");
 		expect(rejectInvoice.kind).toBe("function_variable");
@@ -50,7 +53,7 @@ describe("E2E: Function Variables Fixture", () => {
 		expect(rejectInvoice.exported).toBe(false);
 
 		for (const sym of [approveInvoice, rejectInvoice]) {
-			expect(sym.parameters instanceof Array).toBe(true);
+			expect(Array.isArray(sym.parameters)).toBe(true);
 			expect(sym.returnType).toBeDefined();
 			expect(sym.provenance).toBeDefined();
 		}

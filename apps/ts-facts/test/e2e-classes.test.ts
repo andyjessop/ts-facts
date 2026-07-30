@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
+import type { StaticFactsFile } from "ts-facts-core";
 
 describe("E2E: Classes Fixture", () => {
 	test("runs the full pipeline and extracts class symbols correctly", async () => {
@@ -32,23 +33,25 @@ describe("E2E: Classes Fixture", () => {
 
 		expect(existsSync(outFile)).toBe(true);
 
-		const data = JSON.parse(readFileSync(outFile, "utf-8"));
+		const data = JSON.parse(readFileSync(outFile, "utf-8")) as StaticFactsFile;
 
 		const symbols = data.symbols;
-		const classSymbol = symbols.find((s: any) => s.name === "UserService");
+		const classSymbol = symbols.find((s) => s.name === "UserService");
 		const ctorSymbol = symbols.find(
-			(s: any) =>
+			(s) =>
 				s.name === "constructor" && s.qualifiedName.startsWith("UserService"),
 		);
-		const createMethod = symbols.find((s: any) => s.name === "createUser");
-		const normalizeMethod = symbols.find(
-			(s: any) => s.name === "normalizeEmail",
-		);
+		const createMethod = symbols.find((s) => s.name === "createUser");
+		const normalizeMethod = symbols.find((s) => s.name === "normalizeEmail");
 
 		expect(classSymbol).toBeDefined();
 		expect(ctorSymbol).toBeDefined();
 		expect(createMethod).toBeDefined();
 		expect(normalizeMethod).toBeDefined();
+
+		if (!classSymbol || !ctorSymbol || !createMethod || !normalizeMethod) {
+			throw new Error("Expected class symbols missing");
+		}
 
 		// Class schema
 		expect(classSymbol.kind).toBe("class");

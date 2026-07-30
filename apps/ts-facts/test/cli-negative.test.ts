@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
+import { existsSync, readFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
-import { readFileSync, rmSync, existsSync } from "node:fs";
+import type { StaticFactsFile } from "ts-facts-core";
 
 describe("CLI Negative Paths & Exclusions", () => {
 	test("exits with code 1 without --tsconfig", async () => {
@@ -54,7 +55,7 @@ describe("CLI Negative Paths & Exclusions", () => {
 		const exitCode = await proc.exited;
 		expect(exitCode).toBe(0);
 
-		const data = JSON.parse(readFileSync(outFile, "utf-8"));
+		const data = JSON.parse(readFileSync(outFile, "utf-8")) as StaticFactsFile;
 		const sourceFiles = data.project.sourceFiles as string[];
 
 		// login.ts should be excluded
@@ -63,7 +64,7 @@ describe("CLI Negative Paths & Exclusions", () => {
 		expect(sourceFiles.some((f) => f.endsWith("types.ts"))).toBe(true);
 
 		// Assert symbols from login.ts are gone
-		const symbolNames = data.symbols.map((s: any) => s.name);
+		const symbolNames = data.symbols.map((s) => s.name);
 		expect(symbolNames).not.toContain("login");
 		expect(symbolNames).not.toContain("findUserByEmail");
 

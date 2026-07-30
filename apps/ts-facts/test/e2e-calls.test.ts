@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
+import type { StaticFactsFile } from "ts-facts-core";
 
 describe("E2E: Calls Fixture", () => {
 	test("runs the full pipeline and extracts calls correctly", async () => {
@@ -32,19 +33,19 @@ describe("E2E: Calls Fixture", () => {
 
 		expect(existsSync(outFile)).toBe(true);
 
-		const data = JSON.parse(readFileSync(outFile, "utf-8"));
+		const data = JSON.parse(readFileSync(outFile, "utf-8")) as StaticFactsFile;
 
 		const calls = data.calls;
 		const symbols = data.symbols;
 
-		const mainSymbol = symbols.find((s: any) => s.name === "main");
+		const mainSymbol = symbols.find((s) => s.name === "main");
 		expect(mainSymbol).toBeDefined();
 
-		const mainCall = calls.find((c: any) => c.expressionText === "main()");
-		const dynamicCall = calls.find((c: any) =>
+		const mainCall = calls.find((c) => c.expressionText === "main()");
+		const dynamicCall = calls.find((c) =>
 			c.expressionText.includes("[action]"),
 		);
-		const newGreeterCall = calls.find((c: any) =>
+		const newGreeterCall = calls.find((c) =>
 			c.expressionText.startsWith("new Greeter("),
 		);
 
@@ -52,18 +53,22 @@ describe("E2E: Calls Fixture", () => {
 		expect(dynamicCall).toBeDefined();
 		expect(newGreeterCall).toBeDefined();
 
+		if (!mainSymbol || !mainCall || !dynamicCall || !newGreeterCall) {
+			throw new Error("Expected symbols/calls missing");
+		}
+
 		expect(mainCall.from).toBeNull();
 		expect(mainCall.to).toBe(mainSymbol.id);
 
 		expect(dynamicCall.to).toBeNull();
 
 		expect(newGreeterCall.from).toBe(mainSymbol.id);
-		expect(newGreeterCall.argumentTypes instanceof Array).toBe(true);
+		expect(Array.isArray(newGreeterCall.argumentTypes)).toBe(true);
 		expect(newGreeterCall.returnType).toBeDefined();
 
 		for (const call of [mainCall, dynamicCall, newGreeterCall]) {
 			expect(!!call.expressionText).toBe(true);
-			expect(call.argumentTypes instanceof Array).toBe(true);
+			expect(Array.isArray(call.argumentTypes)).toBe(true);
 			expect(call.returnType).toBeDefined();
 			expect(call.provenance).toBeDefined();
 		}

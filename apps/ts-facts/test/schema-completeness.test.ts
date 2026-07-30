@@ -1,8 +1,9 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
+import type { Provenance, StaticFactsFile } from "ts-facts-core";
 
-function assertProvenance(provenance: any) {
+function assertProvenance(provenance: Provenance) {
 	expect(provenance).toBeDefined();
 	expect(["ast_node", "type_checker"]).toContain(provenance.kind);
 	expect(!!provenance.file).toBe(true);
@@ -42,7 +43,9 @@ describe("Schema Completeness", () => {
 			const code = await proc.exited;
 			if (code !== 0) throw new Error(`CLI failed on ${fixture}`);
 
-			const data = JSON.parse(readFileSync(outFile, "utf-8"));
+			const data = JSON.parse(
+				readFileSync(outFile, "utf-8"),
+			) as StaticFactsFile;
 
 			for (const symbol of data.symbols) {
 				expect(symbol.id.startsWith("sym_")).toBe(true);
@@ -58,7 +61,7 @@ describe("Schema Completeness", () => {
 				expect("qualifiedName" in symbol).toBe(true);
 				expect(typeof symbol.exported).toBe("boolean");
 				expect("signatureText" in symbol).toBe(true); // nullable
-				expect(symbol.parameters instanceof Array).toBe(true);
+				expect(Array.isArray(symbol.parameters)).toBe(true);
 				expect("returnType" in symbol).toBe(true); // nullable
 				assertProvenance(symbol.provenance);
 
@@ -94,7 +97,7 @@ describe("Schema Completeness", () => {
 				expect("from" in call).toBe(true); // nullable
 				expect("to" in call).toBe(true); // nullable
 				expect(!!call.expressionText).toBe(true);
-				expect(call.argumentTypes instanceof Array).toBe(true);
+				expect(Array.isArray(call.argumentTypes)).toBe(true);
 				expect(call.returnType).toBeDefined();
 				assertProvenance(call.provenance);
 

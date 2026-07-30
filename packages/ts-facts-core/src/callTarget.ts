@@ -1,8 +1,8 @@
-import ts from "typescript";
 import { resolve } from "node:path";
+import ts from "typescript";
 import { normalizePath } from "./provenance";
-import type { SymbolIndex } from "./symbolIndex";
 import type { SymbolFact } from "./schema";
+import type { SymbolIndex } from "./symbolIndex";
 
 export type CallTargetClassification =
 	| { kind: "project"; symbol: SymbolFact }

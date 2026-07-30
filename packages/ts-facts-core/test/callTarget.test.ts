@@ -3,9 +3,9 @@ import { dirname, resolve } from "node:path";
 import ts from "typescript";
 import { classifyCallTarget } from "../src/callTarget";
 import { extractSymbolsInternal } from "../src/extractSymbols";
-import { buildSymbolIndex } from "../src/symbolIndex";
 import { loadProject } from "../src/loadProject";
 import { normalizePath } from "../src/provenance";
+import { buildSymbolIndex } from "../src/symbolIndex";
 
 const BUILTINS_FIXTURE = resolve(
 	import.meta.dir,
@@ -76,7 +76,8 @@ describe("classifyCallTarget", () => {
 
 		// Platform APIs (Node/Bun)
 		expect(
-			classifications.hasOwnProperty(
+			Object.hasOwn(
+				classifications,
 				"console.log(max, keys, isArray, resolved)",
 			),
 		).toBe(true);

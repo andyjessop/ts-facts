@@ -1,5 +1,6 @@
-import ts from "typescript";
 import { resolve } from "node:path";
+import ts from "typescript";
+import { classifyCallTarget } from "./callTarget";
 import { makeCallStableKey, makeId } from "./ids";
 import {
 	makeProvenance,
@@ -9,7 +10,6 @@ import {
 import type { CallFact } from "./schema";
 import type { SymbolIndex } from "./symbolIndex";
 import { getCheckerTypeText } from "./text";
-import { classifyCallTarget } from "./callTarget";
 
 /**
  * Traverses up from a node to find the nearest containing symbol in the index.

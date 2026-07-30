@@ -8,8 +8,8 @@ import {
 	extractSymbolsInternal,
 	extractTypeDeclarations,
 	loadProject,
-	toProjectRelativePath,
 	type StaticFactsFile,
+	toProjectRelativePath,
 	writeJsonFile,
 } from "ts-facts-core";
 

@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, readFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
+import type { StaticFactsFile } from "ts-facts-core";
 
 describe("E2E: Basic Fixture", () => {
 	test("runs the full pipeline and produces expected JSON", async () => {
@@ -32,15 +33,15 @@ describe("E2E: Basic Fixture", () => {
 
 		expect(existsSync(outFile)).toBe(true);
 
-		const data = JSON.parse(readFileSync(outFile, "utf-8"));
+		const data = JSON.parse(readFileSync(outFile, "utf-8")) as StaticFactsFile;
 
 		// Top-level fields
 		expect(data.schemaVersion).toBe("0.1.0");
 		expect(data.mode).toBe("typescript_static_facts");
 		expect(data.project).toBeDefined();
-		expect(data.symbols instanceof Array).toBe(true);
-		expect(data.typeDeclarations instanceof Array).toBe(true);
-		expect(data.calls instanceof Array).toBe(true);
+		expect(Array.isArray(data.symbols)).toBe(true);
+		expect(Array.isArray(data.typeDeclarations)).toBe(true);
+		expect(Array.isArray(data.calls)).toBe(true);
 
 		// Project metadata
 		const sourceFiles = data.project.sourceFiles as string[];
@@ -49,18 +50,18 @@ describe("E2E: Basic Fixture", () => {
 		expect(data.project.tsconfig).toBe("tsconfig.json");
 
 		// Symbols
-		const symbolNames = data.symbols.map((s: any) => s.name);
+		const symbolNames = data.symbols.map((s) => s.name);
 		expect(symbolNames).toContain("login");
 		expect(symbolNames).toContain("findUserByEmail");
 
 		// Type declarations
-		const typeNames = data.typeDeclarations.map((t: any) => t.name);
+		const typeNames = data.typeDeclarations.map((t) => t.name);
 		expect(typeNames).toContain("LoginRequest");
 		expect(typeNames).toContain("LoginResult");
 		expect(typeNames).toContain("User");
 
 		// Calls
-		const callExpressions = data.calls.map((c: any) => c.expressionText);
+		const callExpressions = data.calls.map((c) => c.expressionText);
 		expect(
 			callExpressions.some((e: string) =>
 				e.includes("findUserByEmail(input.email)"),
